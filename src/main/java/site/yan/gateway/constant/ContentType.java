@@ -5,6 +5,7 @@ package site.yan.gateway.constant;
  * @date 2020-3-28
  */
 public enum ContentType {
+
     JSON("application/json");
 
     private String value;

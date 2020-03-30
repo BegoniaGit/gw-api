@@ -16,11 +16,16 @@ import java.util.concurrent.*;
  * @date 2020-3-28
  */
 public class Boot {
-
     private ExecutorService executor = new ThreadPoolExecutor(2, 2,
             60L, TimeUnit.SECONDS,
-            new ArrayBlockingQueue(200000));
-    private static Logger logger= LoggerFactory.getLogger(Boot.class);
+            new ArrayBlockingQueue(200000),
+            r -> {
+                Thread thread = new Thread(r);
+                thread.setName("http-server-thread");
+                return thread;
+            });
+    private static Logger logger = LoggerFactory.getLogger(Boot.class);
+
     public static void main(String[] args) throws Exception {
         logger.info("Http Server boot...");
 

@@ -20,18 +20,20 @@ public class HttpAppRequest implements HttpRequest {
 
     private String protocol;
 
-    private static final int ROW_MIN = 0XA;
+    private static final int ROW_MIN = 0X5;
+    private static final int PARAM_MIN = 0X3;
     private static final String PARAM_ROW_DELIMITER = "\r\n";
     private static final String PARAM_PART_DELIMITER = " ";
 
+
     @Override
     public void parse(byte[] rawByte) {
-        if (rawByte.length < 5) {
+        if (rawByte.length < ROW_MIN) {
             throw new HttpParsException("An exception occurred in the length of the original http byte array");
         }
         String rowStr = new String(rawByte).split(PARAM_ROW_DELIMITER)[0];
         String[] params = rowStr.split(PARAM_PART_DELIMITER);
-        if (params.length < 3) {
+        if (params.length < PARAM_MIN) {
             throw new HttpParsException("An exception occurred in Parsing HTTP Basic Request Information");
         }
         this.method = params[0];
